@@ -6,14 +6,11 @@ var satelliteMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 });
 
 //  light Layer
-var lightMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10.html?title=true&access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NDg1bDA1cjYzM280NHJ5NzlvNDMifQ.d6e-nNyBDtmQCVwVNivz7A#2/0/0',
+var lightMap = L.tileLayer('https://api.mapbox.com/styles/v1/racquesta/cjbqrgrdv7c8i2sp4n2am3pfk/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWR1cnN0MTIiLCJhIjoiY2pjc2FrOGFtMGI1MTJ3cXFvdXhzaHBkciJ9.5t4SPDU14v4XuvOilZLo5w',
     { maxZoom: 18 });
 
-// dark layer
-
-var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?" +
-    "access_token=pk.eyJ1Ijoia2pnMzEwIiwiYSI6ImNpdGRjbWhxdjAwNG0yb3A5b21jOXluZTUifQ." +
-    "T6YbdDixkOBWH_k9GbS8JQ");
+// outdoors layer
+var outdoorsMap = L.tileLayer('https://api.mapbox.com/styles/v1/racquesta/cjbqrrjqy83j52snp27di7koj/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWR1cnN0MTIiLCJhIjoiY2pjc2FrOGFtMGI1MTJ3cXFvdXhzaHBkciJ9.5t4SPDU14v4XuvOilZLo5w')
 
 
 // quake data link
@@ -35,10 +32,10 @@ d3.json(quakeLink, function (data) {
                 {
                     radius: getRadius(feature.properties.mag),
                     fillColor: getColor(feature.properties.mag),
-                    fillOpacity: .9,
+                    fillOpacity: .7,
                     stroke: true,
                     color: "black",
-                    weight: .9
+                    weight: .5
 
                 })
         },
@@ -90,10 +87,9 @@ console.log("made it here")
 
 function createMap(quakeLayer, faultLayer) {
     var baseMaps = {
-        
+        "Outdoor Map": outdoorsMap,
         "Grayscale Map": lightMap,
-        "Satelite Map": satelliteMap,
-        "Dark Map": darkmap
+        "Satelite Map": satelliteMap
     };
 
     var overlayMaps = {
@@ -117,16 +113,16 @@ function createMap(quakeLayer, faultLayer) {
     legend.onAdd = function (mymap) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            shades = [0, 1, 2, 3, 4, 5],
+            grades = [0, 1, 2, 3, 4, 5],
             labels = [];
 
         div.innerHTML += '<p><u>Magnitude</u></p>'
 
         // loop through our density intervals and generate a label with a colored square for each interval
-        for (var i = 0; i < shades.length; i++) {
+        for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColor(shades[i] + 1) + '"></i> ' +
-                shades[i] + (shades[i + 1] ? '&ndash;' + shades[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
 
         return div;
@@ -140,3 +136,6 @@ function createMap(quakeLayer, faultLayer) {
 }
 
 
+// legend code
+
+// createMap(quakesLayer)

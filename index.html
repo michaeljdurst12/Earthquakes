@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Earthquakes</title>
+    <title>Earthquakes and Fault Lines</title>
 
 
 
@@ -18,7 +18,8 @@
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
         crossorigin=""></script>
 
-    
+    <!-- leaflet timeline cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.timeline@1.2.0/dist/leaflet.timeline.min.js"></script>
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS & JS -->
@@ -37,8 +38,8 @@
 
     <div class="jumbotron">
         <div class="container">
-            <h1>Earthquakes & Fault Lines</h1>
-            <p class="text-light">Graphs of all Earthquakes Over The last Week</p>
+            <h1>Earthquakes and Fault Lines</h1>
+            <p>Graphs of all Earthquakes Over The last 7 Days</p>
         </div>
     </div>
 
@@ -49,24 +50,39 @@
             <div class="panel-body">
                 <div style="text-align: center">
                     <h4>
-                        <u>Earthquakes over the Last Week</u>
+                        <u>Earthquakes over the Last 7 Days</u>
                     </h4>
                     <hr>
-                    <p>This map shows earthquakes over the last week.  Size and color correspond with magnitude.
+                    <p>The map below shows the earthquake data over the last 7 days. Color and size correspond to the magnitude
+                        of the earthquake. Click for additional information.
                     </p>
                 </div>
                 <div id="mapid"></div>
             </div>
         </div>
 
-      
+        <!-- timeline map -->
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div style="text-align: center">
+                    <h4>
+                        <u>Last 7 Days Earthquakes over Time</u>
+                    </h4>
+                    <hr>
+                    <p>The map below shows the earthquake data over the last 7 days. Color and size correspond to the magnitude
+                        of the earthquake. The length of time the earthquake shows on the animation corresponds to the magnitude.
+                    </p>
+                </div>
+                <div id="timeMap"></div>
+            </div>
+        </div>
 
 
     </div>
 
 
     <script src="logic.js"></script>
-    
+    <script src="timeline.js"></script>
 </body>
 
 </html>
