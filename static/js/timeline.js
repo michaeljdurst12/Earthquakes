@@ -14,16 +14,43 @@ var satelliteMap1 = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y
     accessToken: 'pk.eyJ1IjoicmFjcXVlc3RhIiwiYSI6ImNqYWs5emMwYjJpM2EyenBsaWRjZ21ud2gifQ.af0ky4cpslCbwe--lCrjZA'
 }).addTo(timeMap);
 
+var quakeLink = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+var faultLinesLink = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
+
 d3.json(quakeLink, function (data) {
     var quakeData = data.features;
 
     console.log(quakeData);
+    // Determines the color of the marker based on the magnitude of the earthquake.
+    function getColor(magnitude) {
+        switch (true) {
+            case magnitude > 5:
+                return "#ea2c2c";
+            case magnitude > 4:
+                return "#ea822c";
+            case magnitude > 3:
+                return "#ee9c00";
+            case magnitude > 2:
+                return "#eecc00";
+            case magnitude > 1:
+                return "#d4ee00";
+            default:
+                return "#98ee00";
+        }
+    }
+
+    // This function determines the radius of the earthquake marker based on its magnitude.
+    // Earthquakes with a magnitude of 0 were being plotted with the wrong radius.
+    function getRadius(value) {
+        return value * 50000
+    }
+    
 
     var timelineLayer = L.timeline(data, {
         getInterval: function (feature) {
             return {
                 start: feature.properties.time,
-                end: feature.properties.time + (feature.properties.mag * 1800000)
+                end: feature.properties.time + (feature.properties.mag * 18000000)
             };
         },
         pointToLayer: function (feature, latlng) {
